@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- This page loads nothing from other sites. The policy below makes the browser enforce that. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'">
+<title data-i18n="meta.title">Inkfold: free handwritten notes and PDF annotation for Windows</title>
+<meta name="description" data-i18n-content="meta.description" content="Inkfold is a free Windows app for handwritten notes, typed text and writing on PDFs: six kinds of pen, a lasso, shapes, eleven papers and an endless canvas. No account, no ads, no paid tier. It works offline and your notes stay on your PC.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F5F5F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1117" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Inkfold">
+<meta property="og:title" content="Inkfold: a notebook that asks for nothing">
+<meta property="og:description" content="Free handwritten notes, typed text and PDF annotation for Windows. No account, no ads, works offline.">
+<!-- Optional, after publishing: og:url and og:image need absolute URLs, so they are left out. The page works without them. -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="Inkfold, back to top">
+    <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path class="mark-paper" d="M10 3h10l9 9v10a7 7 0 0 1-7 7H10a7 7 0 0 1-7-7V10a7 7 0 0 1 7-7z"/>
+      <path class="mark-flap" d="M20 3v5a4 4 0 0 0 4 4h5z"/>
+      <path class="mark-ink" d="M8.500 20.500c2-5.500 4.300-5.500 6-1s4 5 6.500-1.500"/>
+    </svg>
+    <span class="brand__name">Inkfold</span>
+  </a>
+  <nav class="top__nav" aria-label="Page sections" data-i18n-aria="nav.label">
+    <a href="#what" data-i18n="nav.what">What it does</a>
+    <a href="#install" data-i18n="nav.install">Install</a>
+    <a href="#next" data-i18n="nav.next">What's next</a>
+  </nav>
+</header>
+
+<!-- Pen drawings: the app's own pen tray artwork, one symbol per tool on a 32 × 80 grid, tip up.
+     Each use sets --ink (the colour) and --band (height of the colour band; a thicker pen has a taller band). -->
+<svg class="sr-only" aria-hidden="true" focusable="false">
+  <symbol id="pen-fineliner" viewBox="0 0 32 80"><path d="M10 23 13.700 8.400Q16 2.800 18.300 8.400L22 23z" fill="var(--ink)"/><path d="M14.300 10.500 12.700 18" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.800" stroke-linecap="round"/><rect x="7" y="25" width="18" height="71" rx="6" fill="#F4F1EA"/><rect x="8.5" y="21" width="15" height="6" rx="3" fill="#DFE0E8"/><rect class="band band--fine" x="7" y="35" width="18" height="6" fill="var(--ink)"/><rect x="10.1" y="30" width="2.9" height="80" rx="1.4" fill="#fff" fill-opacity=".8"/><rect x="20.3" y="31" width="4.7" height="80" fill="#1E1E28" fill-opacity=".055"/></symbol>
+  <symbol id="pen-highlighter" viewBox="0 0 32 80"><path d="M9.500 23V11.200Q9.500 8.200 12.300 7.200L18.800 4.800Q22.500 3.600 22.500 7.300V23z" fill="var(--ink)"/><path d="M12.600 11v8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.800" stroke-linecap="round"/><rect x="4" y="25" width="24" height="71" rx="8" fill="#FCFBF8"/><rect x="4" y="25" width="24" height="71" rx="8" fill="var(--ink)" fill-opacity=".5"/><rect x="7" y="21" width="18" height="6" rx="3" fill="#DFE0E8"/><rect class="band band--hl" x="4" y="36" width="24" height="7" fill="var(--ink)"/><rect x="8.1" y="30" width="3.8" height="80" rx="1.9" fill="#fff" fill-opacity=".8"/><rect x="21.8" y="31" width="6.2" height="80" fill="#1E1E28" fill-opacity=".055"/></symbol>
+  <symbol id="pen-fountain" viewBox="0 0 32 80"><path d="M16 3.200Q22.200 10 21 17.500Q20.400 21.500 16 21.500Q11.600 21.500 11 17.500Q9.800 10 16 3.200z" fill="#EDD292"/><path d="M16 8.500v7" stroke="#B9964B" stroke-width="1.500" stroke-linecap="round"/><path d="M9.300 29 11 19.500h10L22.700 29z" fill="var(--ink)"/><rect x="7" y="27" width="18" height="69" rx="6" fill="#F4F1EA"/><rect class="band band--fine" x="7" y="37" width="18" height="6" fill="var(--ink)"/><rect x="10.1" y="32" width="2.9" height="80" rx="1.4" fill="#fff" fill-opacity=".8"/><rect x="20.3" y="33" width="4.7" height="80" fill="#1E1E28" fill-opacity=".055"/></symbol>
+  <symbol id="pen-pencil" viewBox="0 0 32 80"><path d="M7 27 13.200 9.200Q16 3.400 18.800 9.200L25 27z" fill="#F1D7B0"/><path d="M13.200 9.200Q16 3.400 18.800 9.200Q16 11.200 13.200 9.200z" fill="var(--ink)"/><path d="M7 27q3-5 6 0q3-5 6 0q3-5 6 0V96H7z" fill="#F7DC8E"/><rect class="band band--fine" x="7" y="36" width="18" height="6" fill="var(--ink)"/><rect x="13" y="26" width="6" height="70" fill="#fff" fill-opacity=".35"/><rect x="19" y="27" width="6" height="70" fill="#1E1E28" fill-opacity=".05"/></symbol>
+  <symbol id="pen-marker" viewBox="0 0 32 80"><path d="M10.500 23V11.800Q10.500 4 16 4Q21.500 4 21.500 11.800V23z" fill="var(--ink)"/><path d="M13.300 9.500v8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.800" stroke-linecap="round"/><rect x="5.5" y="25" width="21" height="71" rx="7" fill="#F4F1EA"/><rect x="8.5" y="21" width="15" height="6" rx="3" fill="#DFE0E8"/><rect class="band band--marker" x="5.5" y="35" width="21" height="9" fill="var(--ink)"/><rect x="9.1" y="30" width="3.4" height="80" rx="1.7" fill="#fff" fill-opacity=".8"/><rect x="21.0" y="31" width="5.5" height="80" fill="#1E1E28" fill-opacity=".055"/></symbol>
+  <symbol id="pen-brush" viewBox="0 0 32 80"><path d="M16 2.400Q23.200 12 20.600 18.600Q19.200 22.500 16 22.500Q12.800 22.500 11.400 18.600Q8.800 12 16 2.400z" fill="var(--ink)"/><path d="M14.200 9Q12.400 13 13 17" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.800" stroke-linecap="round"/><path d="M10.500 26h11l1.700 70H8.800z" fill="#F0D9B4"/><rect x="10" y="21" width="12" height="6" rx="3" fill="#DFE0E8"/><rect class="band band--fine" x="9.9" y="35" width="12.200" height="6" fill="var(--ink)"/><rect x="12.300" y="31" width="2.200" height="60" rx="1.100" fill="#fff" fill-opacity=".7"/></symbol>
+  <symbol id="tool-eraser" viewBox="0 0 32 80"><rect x="6" y="8" width="20" height="30" rx="8" fill="#F7C0CC"/><path d="M10.500 16Q11 12.500 14.500 12" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.800" stroke-linecap="round"/><rect x="5" y="25" width="22" height="72" rx="5" fill="#EEF0F7"/><rect x="5" y="32" width="22" height="7" fill="#CBD4F0"/><rect x="8.7" y="30" width="3.5" height="80" rx="1.8" fill="#fff" fill-opacity=".8"/><rect x="21.3" y="31" width="5.7" height="80" fill="#1E1E28" fill-opacity=".055"/></symbol>
+</svg>
+
+<main id="main">
+  <svg class="thread" aria-hidden="true" focusable="false"><path/></svg>
+
+  <!-- ───────────── Hero: headline and the page you can write on ───────────── -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="hero__copy">
+      <h1 id="hero-title"><span class="line"><span data-i18n="hero.t1">A notebook that</span></span> <span class="line"><span><span data-i18n="hero.t2">asks for</span> <span class="marked"><span data-i18n="hero.t3">nothing.</span><svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 11C22 8 40 12.500 61 10s28-1 37 0"/></svg></span></span></span></h1>
+      <p class="lede" data-i18n="hero.lede">Inkfold is a free Windows app for handwritten notes, typed text and PDFs you can write on and fill in. No account, no ads, no paid version. It works without an internet connection.</p>
+      <div class="cta">
+        <a class="button" data-link="releases" rel="noopener">
+          <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path class="button__arrow" d="M10 3v9.500m0 0 4-4m-4 4-4-4"/><path d="M4 16.500h12"/></svg>
+          <span data-i18n="cta.download">Download for Windows</span>
+        </a>
+        <p class="cta__note" data-i18n="cta.note">Free. The installer is on GitHub Releases.</p>
+      </div>
+    </div>
+
+    <span class="chip chip--1" aria-hidden="true"><svg viewBox="0 0 60 30"><path d="M6 18c5-13 10-13 15-2s10 11 15 0 10-9 18-3"/></svg></span>
+    <span class="chip chip--2" aria-hidden="true"><svg viewBox="0 0 60 30"><path d="M6 16c8-9 14 8 22 0s14 6 26-2"/></svg></span>
+    <span class="chip chip--3" aria-hidden="true"><svg viewBox="0 0 60 30"><path d="M5 15h50"/></svg></span>
+
+    <div class="studio" id="demo">
+      <p class="sr-only" data-i18n="demo.describe">What follows is a live drawing demo. With a mouse or a pen you can write on the page. The buttons choose one of three pens, a highlighter or the eraser. Pressing the pen that is already chosen opens its colours and thickness.</p>
+      <div class="studio__bar">
+        <!-- The pen tray, as in the app: each pen is its own tool with its own ink and thickness.
+             The pen in use stands on a raised tile; pressing it again opens its colours and thickness. -->
+        <div class="traypill" role="toolbar" aria-label="Pens and page tools" data-i18n-aria="tools.label">
+          <div class="tray">
+          <button type="button" class="penb" data-pen="0" aria-pressed="false" aria-label="Charcoal pen" title="Charcoal pen"><svg class="pen" viewBox="0 0 32 80" aria-hidden="true" focusable="false"><use href="#pen-fineliner"/></svg></button>
+          <button type="button" class="penb" data-pen="1" aria-pressed="true" aria-label="Blue pen" title="Blue pen"><svg class="pen" viewBox="0 0 32 80" aria-hidden="true" focusable="false"><use href="#pen-fineliner"/></svg></button>
+          <button type="button" class="penb" data-pen="2" aria-pressed="false" aria-label="Red pen" title="Red pen"><svg class="pen" viewBox="0 0 32 80" aria-hidden="true" focusable="false"><use href="#pen-fineliner"/></svg></button>
+          <button type="button" class="penb" data-pen="3" aria-pressed="false" aria-label="Yellow highlighter" title="Yellow highlighter"><svg class="pen" viewBox="0 0 32 80" aria-hidden="true" focusable="false"><use href="#pen-highlighter"/></svg></button>
+          <button type="button" class="penb" data-pen="4" aria-pressed="false" aria-label="Eraser" title="Eraser"><svg class="pen" viewBox="0 0 32 80" aria-hidden="true" focusable="false"><use href="#tool-eraser"/></svg></button>
+          </div>
+          <span class="pill__sep" aria-hidden="true"></span>
+          <button type="button" class="tool" data-action="undo" aria-label="Undo" title="Undo" data-i18n-aria="tools.undo" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6 4.500 10.500 9 15"/><path d="M5 10.500h9.500a4.500 4.500 0 0 1 0 9H11"/></svg></button>
+          <button type="button" class="tool" data-action="redo" aria-label="Redo" title="Redo" data-i18n-aria="tools.redo" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6 4.500 4.500L15 15"/><path d="M19 10.500H9.500a4.500 4.500 0 0 0 0 9H13"/></svg></button>
+          <button type="button" class="tool" data-action="clear" aria-label="Clear the page" title="Clear the page" data-i18n-aria="tools.clear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.500h7l4 4v13H7z"/><path d="M14 3.500v4h4"/></svg></button>
+        </div>
+        <div class="penpop" id="penpop" role="group" aria-label="Colour and thickness" data-i18n-aria="tools.style" hidden>
+          <div class="penpop__row">
+          <button type="button" class="swatch" data-colour="0" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="1" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="2" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="3" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="4" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="5" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="6" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-colour="7" aria-pressed="false"></button>
+          </div>
+          <div class="penpop__row penpop__row--weights">
+          <button type="button" class="tool weight" data-weight="0" aria-pressed="false" aria-label="Thin" title="Thin" data-i18n-aria="tools.thin"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="w0" d="M5 14c3-5 5-5 7 0s4 5 7-2"/></svg></button>
+          <button type="button" class="tool weight" data-weight="1" aria-pressed="true" aria-label="Medium" title="Medium" data-i18n-aria="tools.medium"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="w1" d="M5 14c3-5 5-5 7 0s4 5 7-2"/></svg></button>
+          <button type="button" class="tool weight" data-weight="2" aria-pressed="false" aria-label="Thick" title="Thick" data-i18n-aria="tools.thick"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="w2" d="M5 14c3-5 5-5 7 0s4 5 7-2"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="studio__page">
+        <p class="studio__hint hand" aria-hidden="true" data-i18n="demo.hint">Go on, write on this page.</p>
+        <canvas class="ink ink--hl" aria-hidden="true"></canvas>
+        <canvas class="ink ink--pen" role="img" aria-label="Drawing area" data-i18n-aria="demo.canvas"></canvas>
+      </div>
+      <button type="button" class="studio__finger" data-action="finger" aria-pressed="false" hidden data-i18n="tools.finger">Draw with a finger</button>
+    </div>
+  </section>
+
+  <!-- ───────────── Statement ───────────── -->
+  <section class="fold" aria-labelledby="idea-title">
+    <div class="paper idea">
+      <i class="kami" aria-hidden="true"></i>
+      <h2 id="idea-title" data-i18n="idea.title">Handwriting, typed notes and PDFs usually mean <em>three programs.</em></h2>
+      <p data-i18n="idea.body">Inkfold does all three in one quiet app: a library for your notebooks, pens that behave like pens, paper for every subject, and PDFs you can write on and fill in. If you have used Goodnotes, OneNote or Acrobat, you already know the idea.</p>
+    </div>
+  </section>
+
+  <!-- ───────────── Scenes: the editor at work ─────────────
+       The moving picture is a drawing of the editor made in HTML, not a screenshot. -->
+  <section class="scenes" id="what" aria-labelledby="scenes-title">
+    <h2 class="sr-only" id="scenes-title" data-i18n="scenes.title">What it does</h2>
+    <div class="scenes__pin">
+      <div class="scenes__copy">
+        <div class="scene is-on">
+          <h3 data-i18n="scene.a.title">A pen that behaves like a pen.</h3>
+          <p data-i18n="scene.a.body">Ink follows your hand and your pressure. Six kinds of pen stand in the tray, from a fineliner to a brush pen, and each one keeps its own colour and thickness.</p>
+        </div>
+        <div class="scene">
+          <h3 data-i18n="scene.b.title">Colour when you want it.</h3>
+          <p data-i18n="scene.b.body">Every colour has a name, and you can mix your own. Pick an ink and keep writing. The highlighter has colours of its own.</p>
+        </div>
+        <div class="scene">
+          <h3 data-i18n="scene.c.title">Write on a PDF. Keep the original.</h3>
+          <p data-i18n="scene.c.body">Open a PDF, highlight it, write in the margin and type into its blanks, then export a finished copy. The file you opened is never changed.</p>
+        </div>
+        <div class="scene">
+          <h3 data-i18n="scene.d.title">The pen draws. A finger moves the page.</h3>
+          <p data-i18n="scene.d.body">With a pen, the pen writes and a finger pans and zooms. Without one, the mouse and keyboard do everything.</p>
+        </div>
+        <div class="scenes__dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </div>
+
+      <div class="ed" aria-hidden="true">
+        <div class="ed__doc">Biology notes<span>Saved</span></div>
+        <div class="ed__bar">
+          <!-- The pen tray: each pen is its own tool with its own ink; the one in use stands on a raised tile. -->
+          <span class="ed__tray">
+            <i class="ed__penb" data-c="0"><svg viewBox="0 0 32 80"><use href="#pen-fineliner"/></svg></i>
+            <i class="ed__penb" data-c="1"><svg viewBox="0 0 32 80"><use href="#pen-fineliner"/></svg></i>
+            <i class="ed__penb" data-c="2"><svg viewBox="0 0 32 80"><use href="#pen-fineliner"/></svg></i>
+            <i class="ed__penb" data-c="3"><svg viewBox="0 0 32 80"><use href="#pen-fineliner"/></svg></i>
+            <i class="ed__penb" data-t="hl"><svg viewBox="0 0 32 80"><use href="#pen-highlighter"/></svg></i>
+            <i class="ed__penb" data-t="eraser"><svg viewBox="0 0 32 80"><use href="#tool-eraser"/></svg></i>
+          </span>
+          <b></b>
+          <i class="ed__more"></i>
+          <i class="ed__sample"><svg viewBox="0 0 34 20"><path d="M5 12c3-7 6-7 8-1s5 6 8 0 5-5 8-2"/></svg></i>
+        </div>
+        <div class="ed__pop"></div>
+        <div class="ed__thick"><svg viewBox="0 0 120 36"><path d="M10 22c12-18 22-18 32-2s20 16 32 0 20-12 36-6"/></svg><span class="ed__track"><i></i></span></div>
+        <div class="ed__orig">
+          <div class="pdf"><p class="pdf__h">Lab report</p><p class="pdf__bars"><i></i><i></i><i></i></p><p class="pdf__s">Chlorophyll absorbs mostly blue and red light.</p><p class="pdf__bars"><i></i><i></i><i></i><i></i></p><p class="pdf__fig"></p><p class="pdf__bars"><i></i><i></i></p></div>
+          <span class="ed__tag">Original, unchanged</span>
+        </div>
+        <div class="ed__page">
+          <div class="ed__note">
+            <span class="w hand" data-w="title">Photosynthesis</span>
+            <span class="w hand" data-w="l1">light + water + air</span>
+            <span class="w hand" data-w="l2">makes sugar + oxygen</span>
+            <canvas></canvas>
+          </div>
+          <div class="ed__pdf">
+            <div class="pdf"><p class="pdf__h">Lab report</p><p class="pdf__bars"><i></i><i></i><i></i></p><p class="pdf__s">Chlorophyll absorbs mostly blue and red light.</p><p class="pdf__bars"><i></i><i></i><i></i><i></i></p><p class="pdf__fig"></p><p class="pdf__bars"><i></i><i></i></p></div>
+            <span class="w hand" data-w="note">exam!</span>
+            <canvas></canvas>
+          </div>
+          <span class="ed__tag">Annotated copy</span>
+        </div>
+        <i class="ed__finger"></i>
+        <svg class="ed__pen" viewBox="0 0 40 120"><path class="ed__pen-body" d="M12 22h16v76a8 8 0 0 1-16 0z"/><path class="ed__pen-tip" d="M12 22 20 2l8 20z"/><path class="ed__pen-nib" d="M17.500 8.500 20 2l2.500 6.500z"/></svg>
+        <span class="ed__label ed__label--finger">Finger pans</span>
+        <span class="ed__label ed__label--pen">Pen draws</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── What the first release contains ───────────── -->
+  <section class="fold" aria-labelledby="release-title">
+    <div class="paper release">
+      <i class="kami" aria-hidden="true"></i>
+      <h2 id="release-title" data-i18n="release.title">In version 0.1</h2>
+      <p class="release__lead" data-i18n="release.lead">Everything here is built and in the download. It is a first version, so expect a few rough edges.</p>
+      <!-- ═══════════════════════════════════════════════════════════════════
+           RELEASE FEATURES: the one list of what the first release contains.
+           One <li> per feature; the sentence in <p> is the feature, the
+           tile__art block is only its small picture. Edit before launch and
+           keep it true: only things that are built and shipped belong here.
+           (README.md and the release notes repeat this list.)
+           ═══════════════════════════════════════════════════════════════════ -->
+      <ul class="bento" id="release-features">
+        <li class="tile tile--tray">
+          <div class="tile__art" aria-hidden="true"><span class="minitray"><svg class="pen p0" viewBox="0 0 32 80"><use href="#pen-fineliner"/></svg><svg class="pen p1" viewBox="0 0 32 80"><use href="#pen-fountain"/></svg><svg class="pen p2" viewBox="0 0 32 80"><use href="#pen-pencil"/></svg><svg class="pen p3" viewBox="0 0 32 80"><use href="#pen-marker"/></svg><svg class="pen p4" viewBox="0 0 32 80"><use href="#pen-brush"/></svg><svg class="pen p5" viewBox="0 0 32 80"><use href="#pen-highlighter"/></svg></span></div>
+          <p data-i18n="shipped.tray">Six kinds of pen: fineliner, fountain pen, pencil, marker, brush pen and highlighter, plus an eraser. Hold a pen and drag it to put your tray in order.</p>
+        </li>
+        <li class="tile tile--pen">
+          <div class="tile__art" aria-hidden="true"><canvas data-art="pressure"></canvas></div>
+          <p data-i18n="shipped.pen">Pressure sensitivity: press harder for a heavier line</p>
+        </li>
+        <li class="tile tile--colours">
+          <div class="tile__art" aria-hidden="true"><span class="dots"><i class="c0"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i><i class="c7"></i><i class="c8"></i><i class="c9"></i><i class="c10"></i><i class="c11"></i></span><span class="namepill">Soft blue</span></div>
+          <p data-i18n="shipped.colours">Many colours, each with a name. Mix your own, and set a thickness for every pen.</p>
+        </li>
+        <li class="tile tile--lasso">
+          <div class="tile__art" aria-hidden="true"><svg class="lasso" viewBox="0 0 170 100"><path class="lasso__ghost" d="M40 62c7-17 14-17 20-3s13 13 20-2 13-10 21-4"/><g class="lasso__sel"><rect class="lasso__box" x="30" y="34" width="82" height="44" rx="5"/><path class="lasso__ink" d="M40 62c7-17 14-17 20-3s13 13 20-2 13-10 21-4"/><rect class="lasso__knob" x="26" y="30" width="8" height="8" rx="2"/><rect class="lasso__knob" x="108" y="30" width="8" height="8" rx="2"/><rect class="lasso__knob" x="26" y="74" width="8" height="8" rx="2"/><rect class="lasso__knob" x="108" y="74" width="8" height="8" rx="2"/></g></svg></div>
+          <p data-i18n="shipped.lasso">A lasso: circle what you wrote, then move it, resize it, recolour it, copy it or delete it</p>
+        </li>
+        <li class="tile tile--shapes">
+          <div class="tile__art" aria-hidden="true"><svg class="shapes" viewBox="0 0 170 100"><rect class="draw s0" pathLength="1" x="14" y="16" width="52" height="36" rx="2"/><ellipse class="draw s1" pathLength="1" cx="118" cy="34" rx="30" ry="20"/><path class="draw s2" pathLength="1" d="M22 88 46 56l24 32z"/><path class="draw s3" pathLength="1" d="M92 86 150 66"/><path class="draw s3" pathLength="1" d="m137 62 13 4-8 11"/></svg></div>
+          <p data-i18n="shipped.shapes">Shapes: line, arrow, rectangle, ellipse and triangle. Hold Shift for straight lines, squares and circles.</p>
+        </li>
+        <li class="tile tile--templates">
+          <div class="tile__art" aria-hidden="true"><span class="papers"><i class="pp pp--lined"></i><i class="pp pp--margin"></i><i class="pp pp--squared"></i><i class="pp pp--dotted"></i><i class="pp pp--iso"></i><i class="pp pp--music"></i><i class="pp pp--hand"></i><i class="pp pp--cornell"></i><i class="pp pp--todo"></i><i class="pp pp--week"></i><i class="pp pp--story"></i></span></div>
+          <p data-i18n="shipped.templates">Eleven kinds of paper: lined, lined with a margin, squared, dotted, isometric dots, music staves, handwriting lines, Cornell notes, a to-do list, a week and a storyboard</p>
+        </li>
+        <li class="tile tile--canvas">
+          <div class="tile__art" aria-hidden="true"><span class="endless"><i></i><svg viewBox="0 0 120 84"><path class="draw" pathLength="1" d="M12 26c8-14 15-14 22-2s14 13 21 1 14-11 22 0 14 12 22 4"/><path class="draw" pathLength="1" d="M14 52c9-9 17 7 26-1s16 6 26-2"/></svg><b class="ar ar--r">→</b><b class="ar ar--d">↓</b></span></div>
+          <p data-i18n="shipped.canvas">An endless canvas: choose it instead of pages when you make a notebook, and it grows as you write</p>
+        </li>
+        <li class="tile tile--text">
+          <div class="tile__art" aria-hidden="true"><span class="textbox">Typed notes<i></i></span></div>
+          <p data-i18n="shipped.text">A text tool, for when typing is quicker than writing</p>
+        </li>
+        <li class="tile tile--blanks">
+          <div class="tile__art" aria-hidden="true"><span class="worksheet"><span class="ws"><i></i><u><b>oxygen</b></u></span><span class="ws"><i class="short"></i><u><b>sunlight</b></u></span><span class="ws"><i></i><i class="short"></i></span></span></div>
+          <p data-i18n="shipped.blanks">Fill in worksheets: with the Text tool, click an empty line or box in a PDF and type right there. It works best on typed PDFs. On scans it can guess wrong, and a right-click removes a wrong guess.</p>
+        </li>
+        <li class="tile tile--pdf">
+          <div class="tile__art" aria-hidden="true"><span class="sheetlet sheetlet--orig"><i></i><i></i><i></i><i></i></span><span class="sheetlet sheetlet--copy"><i></i><i class="lit"></i><i></i><i></i><svg viewBox="0 0 40 16"><path pathLength="1" d="M3 10c6-7 10 5 16-1s9 3 18-3"/></svg></span></div>
+          <p data-i18n="shipped.pdf">Open a PDF, write on it and export a finished copy as a PDF. The original file is never changed.</p>
+        </li>
+        <li class="tile tile--pages">
+          <div class="tile__art" aria-hidden="true"><span class="pagesrow"><i></i><i class="on"></i><i class="turn"></i><b>+</b></span><span class="zoompill">2 / 3</span></div>
+          <p data-i18n="shipped.pages">A Pages panel: add, insert, duplicate, rotate, reorder and delete pages, or export a single one. It works on PDFs too.</p>
+        </li>
+        <li class="tile tile--library">
+          <div class="tile__art" aria-hidden="true"><span class="shelf"><i class="fd fd--a"></i><i class="fd fd--b"></i><i class="nb nb--a"></i><i class="nb nb--b"></i></span><span class="swrow"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <p data-i18n="shipped.library">A library with folders inside folders, in 16 colours and with 40 icons to choose from. Notebook covers come in six styles. Deleted things wait 30 days in Recently deleted before they go.</p>
+        </li>
+        <li class="tile tile--tabs">
+          <div class="tile__art" aria-hidden="true"><span class="tabstrip"><i>Biology</i><i class="on">Maths</i><i>Lab report</i><b>+</b></span></div>
+          <p data-i18n="shipped.tabs">Tabs: keep several notebooks and PDFs open at once</p>
+        </li>
+        <li class="tile tile--sizes">
+          <div class="tile__art" aria-hidden="true"><span class="sizes"><i class="z0"></i><i class="z1"></i><i class="z2"></i></span><span class="zoompill">30 × 70 cm</span></div>
+          <p data-i18n="shipped.sizes">Your own page sizes, from 5 to 200 cm on each side</p>
+        </li>
+        <li class="tile tile--zoom">
+          <div class="tile__art" aria-hidden="true"><span class="mini"><svg viewBox="0 0 60 30"><path d="M6 18c5-13 10-13 15-2s10 11 15 0 10-9 18-3"/></svg></span><span class="zoompill">− &nbsp;160%&nbsp; +</span></div>
+          <p data-i18n="shipped.zoom">Zoom and pan, with a page that never moves by accident</p>
+        </li>
+        <li class="tile tile--undo">
+          <div class="tile__art" aria-hidden="true"><svg class="undo-line" viewBox="0 0 160 60"><path pathLength="1" d="M10 36c14-30 26-30 38-4s24 28 38 0 26-22 62-8"/></svg><span class="keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+          <p data-i18n="shipped.undo">Undo and redo</p>
+        </li>
+        <li class="tile tile--save">
+          <div class="tile__art" aria-hidden="true"><span class="savepill"><svg viewBox="0 0 20 20"><path pathLength="1" d="m4.500 10.500 3.500 3.500 7.500-8"/></svg>Saved</span></div>
+          <p data-i18n="shipped.autosave">Autosave and crash protection: if the app or the PC stops suddenly, your work comes back the next time. Earlier versions of every notebook are kept too.</p>
+        </li>
+        <li class="tile tile--backup">
+          <div class="tile__art" aria-hidden="true"><svg class="ori boat" viewBox="0 0 120 96"><path class="ori-light ori-edged" d="M60 12 34 56h26z"/><path class="ori-pale ori-edged" d="M60 12l26 44H60z"/><path class="ori-deep" d="M8 52h104L90 76H30z"/><path class="ori-mid" d="M8 52h52v24H30z"/><path class="ori-ink" d="M14 87c8-7 14-7 20-1s13 6 20-1 13-6 20 0 13 6 20-1"/></svg><span class="zoompill">Every day</span></div>
+          <p data-i18n="shipped.backup">A backup every day into your Documents folder, plus Back up now and restore</p>
+        </li>
+        <li class="tile tile--look">
+          <div class="tile__art" aria-hidden="true"><span class="duo"><i>Aa</i><i class="night">Aa</i></span><span class="zoompill">English · Deutsch</span></div>
+          <p data-i18n="shipped.look">Light mode and a deep blue-black dark mode, in English and German</p>
+        </li>
+      </ul>
+      <!-- ═════════════════════ end of RELEASE FEATURES ═════════════════════ -->
+    </div>
+  </section>
+
+  <!-- ───────────── Private and free ───────────── -->
+  <section class="fold" id="private" aria-labelledby="private-title">
+    <div class="paper asks">
+      <i class="kami" aria-hidden="true"></i>
+      <h2 id="private-title" data-i18n="asks.title">What Inkfold asks of you</h2>
+      <p class="sr-only" data-i18n="asks.sr">Nothing: no price, no account, no sign-in, no ads, no paid tier, no telemetry and no internet connection. Inkfold itself makes no network requests.</p>
+      <p class="asks__words" aria-hidden="true">
+        <span class="strike"><span data-i18n="asks.price">A price</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 12C24 7 52 14 99 8"/></svg></span>
+        <span class="strike"><span data-i18n="asks.account">An account</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 9c30 5 61-4 98 3"/></svg></span>
+        <span class="strike"><span data-i18n="asks.signin">A sign-in</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 11c22-4 60 5 98-2"/></svg></span>
+        <span class="strike"><span data-i18n="asks.ads">Ads</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 8c34 6 60 4 98 2"/></svg></span>
+        <span class="strike"><span data-i18n="asks.paid">A paid tier</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 12C30 6 70 13 99 9"/></svg></span>
+        <span class="strike"><span data-i18n="asks.telemetry">Telemetry</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 9c28 4 66-3 98 4"/></svg></span>
+        <span class="strike"><span data-i18n="asks.network">An internet connection</span><svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M1 11c33-5 62 4 98-1"/></svg></span>
+      </p>
+      <p class="asks__answer hand" aria-hidden="true"><span class="write" data-i18n="asks.answer">nothing.</span><svg viewBox="0 0 200 24" preserveAspectRatio="none"><path d="M4 12c40-8 70 9 108 1s52-6 84 2"/></svg></p>
+      <div class="asks__facts">
+        <p data-i18n="asks.offline"><strong>Your notes stay on your PC.</strong> Inkfold itself never goes online. Windows’ WebView2 component, which displays the app, may contact Microsoft on its own, as it does for other Windows apps. WebView2 can also keep crash reports on your PC, which Windows may send to Microsoft depending on your diagnostic-data settings, but Inkfold itself sends nothing. Notes are saved on your own computer, and Inkfold puts a backup of all of them into your Documents folder once a day. If you sync that folder with OneDrive or another service, that is your service at work, not Inkfold.</p>
+        <p data-i18n="asks.free"><strong>Free means free.</strong> No ads, no paid tier, nothing to unlock later. Free for private use and free for commercial use.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── Install ───────────── -->
+  <section class="fold" id="install" aria-labelledby="install-title">
+    <div class="paper install">
+      <i class="kami" aria-hidden="true"></i>
+      <h2 id="install-title" data-i18n="install.title">Get started in three steps</h2>
+      <ol class="steps">
+        <li>
+          <h3 data-i18n="install.s1.title">Download</h3>
+          <p data-i18n="install.s1.body">Get the installer from the Inkfold releases page on GitHub.</p>
+          <a class="button" data-link="releases" rel="noopener">
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path class="button__arrow" d="M10 3v9.500m0 0 4-4m-4 4-4-4"/><path d="M4 16.500h12"/></svg>
+            <span data-i18n="cta.download">Download for Windows</span>
+          </a>
+          <noscript><p class="fine">The download button needs JavaScript. Without it, look for Inkfold's releases page on GitHub.</p></noscript>
+        </li>
+        <li>
+          <h3 data-i18n="install.s2.title">Open the installer</h3>
+          <p data-i18n="install.s2.body">Open the file you downloaded. Windows will show a notice first. It is expected, and the note below explains it.</p>
+        </li>
+        <li>
+          <h3 data-i18n="install.s3.title">Start writing</h3>
+          <p data-i18n="install.s3.body">Open Inkfold, make a notebook, then pick up the pen or the mouse and write. There is nothing to sign up for.</p>
+        </li>
+      </ol>
+
+      <aside class="notice" aria-labelledby="notice-title">
+        <div class="notice__text">
+          <h3 id="notice-title" data-i18n="notice.title">About the Windows notice</h3>
+          <p data-i18n="notice.p1">The first time you open the installer, Windows SmartScreen shows a box that says “Windows protected your PC”. It appears because the installer is not code-signed. A signing certificate costs money every year, and Inkfold is free.</p>
+          <p data-i18n="notice.p2">SmartScreen is a sensible check, and it is right to stop and read it. If you downloaded the installer from the Inkfold releases page on GitHub, choose <strong>More info</strong>, then <strong>Run anyway</strong>.</p>
+          <p data-i18n="notice.p3">If the file came from anywhere else, do not run it. Delete it and download it again from the releases page.</p>
+        </div>
+        <figure class="notice__sketch">
+          <div class="dialogs" aria-hidden="true">
+            <div class="dialog">
+              <p class="dialog__title">Windows protected your PC</p>
+              <span class="dialog__bar"></span><span class="dialog__bar dialog__bar--short"></span>
+              <p class="dialog__link"><span class="ringed">More info<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M12 9C40 1 86 4 94 17c6 12-22 21-52 20C16 36 0 28 5 16 8 9 22 5 40 4"/></svg></span></p>
+            </div>
+            <svg class="dialogs__arrow" viewBox="0 0 40 24"><path class="draw" pathLength="1" d="M3 13c10-3 20-3 31-1"/><path class="draw" pathLength="1" d="m27 6 8 6-8 7"/></svg>
+            <div class="dialog">
+              <p class="dialog__title">Windows protected your PC</p>
+              <span class="dialog__bar"></span><span class="dialog__bar dialog__bar--short"></span>
+              <p class="dialog__buttons"><span class="dialog__btn ringed">Run anyway<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M12 9C40 1 86 4 94 17c6 12-22 21-52 20C16 36 0 28 5 16 8 9 22 5 40 4"/></svg></span><span class="dialog__btn">Don't run</span></p>
+            </div>
+          </div>
+          <figcaption data-i18n="notice.caption">A sketch of the two clicks: first “More info”, then “Run anyway”.</figcaption>
+        </figure>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ───────────── Roadmap ───────────── -->
+  <section class="fold" id="next" aria-labelledby="next-title">
+    <div class="paper next">
+      <i class="kami" aria-hidden="true"></i>
+      <div class="next__lead">
+        <svg class="ori crane" viewBox="0 0 120 96" aria-hidden="true" focusable="false"><path class="ori-pale ori-edged" d="M70 62l38-34-18 38z"/><path class="ori-pale ori-edged" d="M50 62 24 24l8 40z"/><path class="ori-mid" d="M56 58 82 10l-4 50z"/><path class="ori-mid" d="M32 62l28-2v26z"/><path class="ori-deep" d="M60 60l30 4-30 22z"/><path class="ori-light ori-edged" d="M38 62 54 8l18 54z"/><path class="ori-deep" d="M24 24 8 34l19 2z"/></svg>
+        <h2 id="next-title" data-i18n="next.title">What's next</h2>
+        <p data-i18n="next.body">Everything on this list is coming later. None of it is in the download yet, so it is written in pencil, and no dates are promised.</p>
+      </div>
+      <!-- ═══════════════════════════════════════════════════════════════════
+           ROADMAP: planned, not built. When something ships, move it to the
+           RELEASE FEATURES block above (and update README.md).
+           ═══════════════════════════════════════════════════════════════════ -->
+      <ul class="planned hand" id="roadmap" aria-label="Planned, not built yet" data-i18n-aria="next.listLabel">
+        <li data-i18n="plan.images">Pictures on the page</li>
+        <li data-i18n="plan.rich">Headings, checklists and tables</li>
+        <li data-i18n="plan.ruler">A ruler</li>
+        <li data-i18n="plan.split">Two documents side by side</li>
+        <li data-i18n="plan.search">Handwriting search</li>
+        <li data-i18n="plan.convert">Handwriting turned into text</li>
+        <li data-i18n="plan.ocr">Text recognition (OCR)</li>
+        <li data-i18n="plan.forms">PDF forms and signing</li>
+        <li data-i18n="plan.merge">Merge and split PDFs</li>
+        <li data-i18n="plan.planners">Planners</li>
+        <li data-i18n="plan.stickers">Stickers</li>
+      </ul>
+      <!-- ═════════════════════════ end of ROADMAP ═════════════════════════ -->
+    </div>
+  </section>
+
+  <!-- ───────────── Closing ───────────── -->
+  <section class="fold" aria-labelledby="end-title">
+    <div class="paper end">
+      <i class="kami" aria-hidden="true"></i>
+      <svg class="end__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path class="mark-paper" d="M10 3h10l9 9v10a7 7 0 0 1-7 7H10a7 7 0 0 1-7-7V10a7 7 0 0 1 7-7z"/>
+        <path class="mark-flap" d="M20 3v5a4 4 0 0 0 4 4h5z"/>
+        <path class="mark-ink draw" pathLength="1" d="M8.500 20.500c2-5.500 4.300-5.500 6-1s4 5 6.500-1.500"/>
+      </svg>
+      <h2 id="end-title" data-i18n="foot.promise">Free forever. Works offline.</h2>
+      <p class="end__hand hand" aria-hidden="true"><span class="write" data-i18n="foot.hand">Happy writing.</span><svg viewBox="0 0 200 24" preserveAspectRatio="none"><path d="M4 13c34-9 62 8 98 1s58-7 94 1"/></svg></p>
+      <a class="button" data-link="releases" rel="noopener">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path class="button__arrow" d="M10 3v9.500m0 0 4-4m-4 4-4-4"/><path d="M4 16.500h12"/></svg>
+        <span data-i18n="cta.download">Download for Windows</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="foot__links">
+    <a data-link="repo" rel="noopener" data-i18n="foot.github">Inkfold on GitHub</a>
+    <a data-link="issues" rel="noopener" data-i18n="foot.issues">Report a problem</a>
+  </p>
+  <p class="foot__fine" data-i18n="foot.fine">This page loads nothing from other sites: no analytics, no cookies, and its one font is stored with the page. It is hosted on GitHub Pages, which, like any web host, sees ordinary visit requests.</p>
+</footer>
+
+<script src="inkfold.js" defer></script>
+</body>
+</html>
